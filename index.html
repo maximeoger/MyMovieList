@@ -68,8 +68,19 @@
       `;
     }
 
+    document.querySelector("button[type='submit']").addEventListener('click', function(e){
+      e.preventDefault();
+      addData();
+    });
+
     let addData = function(){
-      document.querySelector
+      let form = document.querySelector("form");
+      let fields = document.querySelectorAll("input");
+      fields.forEach( field => {
+        if( field.value === "" ){
+          return alert('entrez un ' + field.name);
+        }
+      })
     }
   </script>
 
