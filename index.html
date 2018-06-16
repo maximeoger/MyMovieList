@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,61 +8,70 @@
   <title>Document</title>
   <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
+
 <body>
+
   <div class="app">
     <section>
       <form action="">
-        <label for=""><input type="text" name="film" placeholder="Entrez un film que vous aimeriez voir"></label>
+        <label for="title"><input type="text" name="title" placeholder="Titre"></label>
+        <label for="director"><input type="text" name="director" placeholder="Réalisateur"></label>
+        <label for="synopsis"><input type="text" name="synopsis" placeholder="Synopsis"></label>
+        <label for="img"><input type="text" name="img" placeholder="copiez l'url d'une image"></label>
+        <label for="url"><input type="text" name="url" placeholder="copiez l'url de la video"></label>
+        <button type="submit">Ajouter !</button>
       </form>
     </section>
     <section class="List">
       <h1 class="List__sectiontitle">Liste de films</h1>
-      <div class="List__movieContainer">
-
-      </div>
+      <div class="List__movieContainer"></div>
     </section>
   </div>
-<!-- Firebase App -->
-<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
-
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDTzpUXVH_74c8Dyg0AslTQdVceI55JvTU",
-    authDomain: "mymovielist-a2c7b.firebaseapp.com",
-    databaseURL: "https://mymovielist-a2c7b.firebaseio.com",
-    projectId: "mymovielist-a2c7b",
-    storageBucket: "mymovielist-a2c7b.appspot.com",
-    messagingSenderId: "656304467720"
-  };
-  firebase.initializeApp(config);
 
 
-  let query = firebase.database().ref("film").orderByKey();
-  query.once("value")
-    .then(function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        let key = childSnapshot.key;
-        let childData = childSnapshot.val();
-        console.log(childData.img)
-        render(childData)
+  <!-- Firebase App -->
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDTzpUXVH_74c8Dyg0AslTQdVceI55JvTU",
+      authDomain: "mymovielist-a2c7b.firebaseapp.com",
+      databaseURL: "https://mymovielist-a2c7b.firebaseio.com",
+      projectId: "mymovielist-a2c7b",
+      storageBucket: "mymovielist-a2c7b.appspot.com",
+      messagingSenderId: "656304467720"
+    };
+    firebase.initializeApp(config);
+
+
+    let query = firebase.database().ref("film").orderByKey();
+    query.once("value")
+      .then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          let key = childSnapshot.key;
+          let childData = childSnapshot.val();
+          render(childData)
+        });
       });
-    });
 
-    let render = function(childData){
+    let render = function(childData) {
       const list_container = document.querySelector(".List__movieContainer");
 
+    
       list_container.innerHTML += `
         <div class="Movie">
-          <div class="Movie__coverContainer" style="background-image: url(' ${ childData.img } ');">
+          <div class="Movie__coverContainer" style="background-image: url(' ${childData.img} ');">
           </div>
-          <p> ${childData.title} </p>
+          <p class="Movie__name"> ${childData.title} </p>
         </div>
       `;
     }
 
-  console.log(query)
-</script>
-</script>
+    let addData = function(){
+      document.querySelector
+    }
+  </script>
+
 </body>
 </html>
