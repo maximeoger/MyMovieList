@@ -1,0 +1,10 @@
+.List{
+  &__sectionTitle{
+    font-size: 24px;
+  }
+  &__movieContainer{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+  }
+}
