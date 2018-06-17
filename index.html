@@ -18,7 +18,7 @@
         <label for="director"><input type="text" name="director" placeholder="Réalisateur"></label>
         <label for="synopsis"><input type="text" name="synopsis" placeholder="Synopsis"></label>
         <label for="img"><input type="text" name="img" placeholder="copiez l'url d'une image"></label>
-        <label for="url"><input type="text" name="url" placeholder="copiez l'url de la video"></label>
+        <label for="category"><input type="text" name="category" placeholder="catégorie"></label>
         <button type="submit">Ajouter !</button>
       </form>
     </section>
@@ -44,19 +44,24 @@
     };
     firebase.initializeApp(config);
 
+    const list_container = document.querySelector(".List__movieContainer");
+    list_container.innerHTML = '<p>Chargement ...</p>';
 
+    let movies = []
     let query = firebase.database().ref("film").orderByKey();
     query.once("value")
       .then(function(snapshot) {
+        list_container.innerHTML = '';
         snapshot.forEach(function(childSnapshot) {
           let key = childSnapshot.key;
           let childData = childSnapshot.val();
+          movies.push(key)
           render(childData)
         });
       });
 
     let render = function(childData) {
-      const list_container = document.querySelector(".List__movieContainer");
+      console.log(movies);
 
     
       list_container.innerHTML += `
@@ -76,12 +81,33 @@
     let addData = function(){
       let form = document.querySelector("form");
       let fields = document.querySelectorAll("input");
+      let data = [];
+      
+
       fields.forEach( field => {
         if( field.value === "" ){
           return alert('entrez un ' + field.name);
         }
+      
       })
+
+      for(let i = 0; i < fields.length; i++){
+        data.push(fields[i].value)
+      }
+      let postData = {
+        category: data[4],
+        director: data[1],
+        img: data[3],
+        synopsis: data[2],
+        title: data[0]
+      }
+
+
+      firebase.database().ref("film/" + movies.length ).set(postData);
+      
     }
+
+ 
   </script>
 
 </body>
